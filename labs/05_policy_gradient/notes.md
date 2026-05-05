@@ -24,6 +24,8 @@ This track starts the Spinning Up main line after DQN and tabular RL.
 - deterministic policy gradients
 - target networks for off-policy actor-critic methods
 - clipped double Q-learning and target policy smoothing
+- entropy-regularized actor-critic objectives
+- tanh-squashed Gaussian policies and log-prob correction
 
 ## Engineering Requirements
 
