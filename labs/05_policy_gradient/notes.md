@@ -23,6 +23,7 @@ This track starts the Spinning Up main line after DQN and tabular RL.
 - clipped objectives for PPO
 - deterministic policy gradients
 - target networks for off-policy actor-critic methods
+- clipped double Q-learning and target policy smoothing
 
 ## Engineering Requirements
 
