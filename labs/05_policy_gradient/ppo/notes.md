@@ -13,3 +13,13 @@ PPO extends policy gradients with a clipped surrogate objective.
 - entropy bonus
 - KL monitoring
 - actor ONNX export
+
+## Implemented
+
+- GAE-lambda
+- PPO trajectory batch
+- clipped policy objective
+- log-prob ratio diagnostics
+- approximate KL diagnostic
+- entropy diagnostic
+- actor ONNX export consistency test
