@@ -124,3 +124,4 @@ def test_ddpg_short_training_loop_writes_artifacts(tmp_path) -> None:  # type: i
     assert (config.run_dir / "actor.pt").exists()
     assert (config.run_dir / "critic.pt").exists()
     assert (config.run_dir / "actor.onnx").exists()
+    assert (config.run_dir / "critic.onnx").exists()

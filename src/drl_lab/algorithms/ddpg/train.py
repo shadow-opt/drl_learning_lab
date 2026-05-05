@@ -16,9 +16,9 @@ from drl_lab.algorithms.ddpg.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
 from drl_lab.common.experiment import save_run_snapshots
-from drl_lab.common.export import export_to_onnx
+from drl_lab.common.export import export_to_onnx, export_to_onnx_multi_input
 from drl_lab.common.logging import CsvLogger
-from drl_lab.common.onnx_check import compare_pytorch_onnx
+from drl_lab.common.onnx_check import compare_pytorch_onnx, compare_pytorch_onnx_multi_input
 from drl_lab.common.seed import set_global_seed
 
 
@@ -141,6 +141,21 @@ def train(config: DDPGConfig) -> dict[str, float]:
     result = compare_pytorch_onnx(agent.actor, onnx_path, example_input)
     if not result.passed:
         raise RuntimeError(f"ONNX consistency failed: {result}")
+    example_action = torch.zeros(4, action_dim, device=device)
+    critic_onnx_path = export_to_onnx_multi_input(
+        agent.critic,
+        (example_input, example_action),
+        config.run_dir / "critic.onnx",
+        input_names=["obs", "actions"],
+        output_names=["q"],
+    )
+    critic_result = compare_pytorch_onnx_multi_input(
+        agent.critic,
+        critic_onnx_path,
+        (example_input, example_action),
+    )
+    if not critic_result.passed:
+        raise RuntimeError(f"critic ONNX consistency failed: {critic_result}")
 
     return {
         "last_actor_loss": last_actor_loss,

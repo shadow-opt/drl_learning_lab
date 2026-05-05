@@ -191,6 +191,14 @@ def train(config: VPGConfig) -> dict[str, float]:
     result = compare_pytorch_onnx(agent.policy, onnx_path, example_input)
     if not result.passed:
         raise RuntimeError(f"ONNX consistency failed: {result}")
+    value_onnx_path = export_to_onnx(
+        agent.value_function,
+        example_input,
+        config.run_dir / "value_function.onnx",
+    )
+    value_result = compare_pytorch_onnx(agent.value_function, value_onnx_path, example_input)
+    if not value_result.passed:
+        raise RuntimeError(f"value ONNX consistency failed: {value_result}")
 
     return {
         "last_policy_loss": last_policy_loss,

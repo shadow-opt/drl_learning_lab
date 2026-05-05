@@ -87,3 +87,5 @@ def test_vpg_train_smoke(tmp_path) -> None:  # type: ignore[no-untyped-def]
     assert "last_policy_loss" in metrics
     assert "last_value_loss" in metrics
     assert metrics["last_eval_return"] > 0.0
+    assert (config.run_dir / "policy.onnx").exists()
+    assert (config.run_dir / "value_function.onnx").exists()

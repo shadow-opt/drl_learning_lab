@@ -16,9 +16,9 @@ from drl_lab.algorithms.td3.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
 from drl_lab.common.experiment import save_run_snapshots
-from drl_lab.common.export import export_to_onnx
+from drl_lab.common.export import export_to_onnx, export_to_onnx_multi_input
 from drl_lab.common.logging import CsvLogger
-from drl_lab.common.onnx_check import compare_pytorch_onnx
+from drl_lab.common.onnx_check import compare_pytorch_onnx, compare_pytorch_onnx_multi_input
 from drl_lab.common.seed import set_global_seed
 
 
@@ -141,6 +141,21 @@ def train(config: TD3Config) -> dict[str, float]:
     result = compare_pytorch_onnx(agent.actor, onnx_path, example_input)
     if not result.passed:
         raise RuntimeError(f"ONNX consistency failed: {result}")
+    example_action = torch.zeros(4, action_dim, device=device)
+    critics_onnx_path = export_to_onnx_multi_input(
+        agent.critics,
+        (example_input, example_action),
+        config.run_dir / "critics.onnx",
+        input_names=["obs", "actions"],
+        output_names=["q1", "q2"],
+    )
+    critics_result = compare_pytorch_onnx_multi_input(
+        agent.critics,
+        critics_onnx_path,
+        (example_input, example_action),
+    )
+    if not critics_result.passed:
+        raise RuntimeError(f"critics ONNX consistency failed: {critics_result}")
 
     return {
         "last_actor_loss": last_actor_loss,

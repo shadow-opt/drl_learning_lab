@@ -183,3 +183,9 @@ Topics:
 - ONNXRuntime inference
 - numerical consistency tests
 - fixed vs dynamic batch shapes
+
+Current status:
+
+- trainable supervised models, Q-networks, policy networks, value functions,
+  actors, and critics are exported to ONNX with PyTorch vs ONNXRuntime
+  consistency checks
