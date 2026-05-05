@@ -3,7 +3,9 @@ from __future__ import annotations
 import torch
 
 from drl_lab.algorithms.ppo.buffer import compute_gae, make_ppo_batch
+from drl_lab.algorithms.ppo.config import PPOConfig
 from drl_lab.algorithms.ppo.losses import approx_kl, clipped_policy_loss, entropy_bonus
+from drl_lab.algorithms.ppo.train import train
 from drl_lab.algorithms.vpg import CategoricalPolicy
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -81,3 +83,20 @@ def test_ppo_policy_onnx_consistency(tmp_path) -> None:  # type: ignore[no-untyp
     result = compare_pytorch_onnx(policy, onnx_path, example_input)
 
     assert result.passed
+
+
+def test_ppo_train_smoke(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    config = PPOConfig(
+        epochs=1,
+        steps_per_epoch=64,
+        policy_train_iters=2,
+        value_train_iters=2,
+        eval_episodes=1,
+        run_dir=tmp_path / "ppo",
+    )
+    metrics = train(config)
+
+    assert "last_policy_loss" in metrics
+    assert "last_value_loss" in metrics
+    assert "last_approx_kl" in metrics
+    assert metrics["last_eval_return"] > 0.0
