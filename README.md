@@ -64,6 +64,8 @@ tests/                Unit and smoke tests
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full learning path.
+See [docs/first_month_plan.md](docs/first_month_plan.md) for the first
+executable month.
 See [docs/iteration_guide.md](docs/iteration_guide.md) for the definition of
 done and recommended git loop.
 

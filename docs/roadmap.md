@@ -3,6 +3,8 @@
 This roadmap keeps the lab small at the start and grows it only when a learning
 slice has notes, exercises, code, reports, and tests.
 
+For a concrete first-month execution order, use `docs/first_month_plan.md`.
+
 ## Phase 0: Engineering Baseline
 
 Goal: make the repository runnable, testable, and reproducible.
