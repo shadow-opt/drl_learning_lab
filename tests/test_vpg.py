@@ -3,8 +3,11 @@ from __future__ import annotations
 import torch
 
 from drl_lab.algorithms.vpg import CategoricalPolicy, ValueFunction, discount_cumsum
+from drl_lab.algorithms.vpg.agent import VPGAgent
 from drl_lab.algorithms.vpg.buffer import make_trajectory_batch, normalize_advantages
+from drl_lab.algorithms.vpg.config import VPGConfig
 from drl_lab.algorithms.vpg.losses import policy_loss, value_loss
+from drl_lab.algorithms.vpg.train import train
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.onnx_check import compare_pytorch_onnx
 from drl_lab.common.seed import set_global_seed
@@ -59,3 +62,28 @@ def test_vpg_policy_onnx_consistency(tmp_path) -> None:  # type: ignore[no-untyp
     result = compare_pytorch_onnx(policy, onnx_path, example_input)
 
     assert result.passed
+
+
+def test_vpg_agent_act_shapes() -> None:
+    set_global_seed(20)
+    agent = VPGAgent(obs_dim=4, n_actions=2, config=VPGConfig(), device=torch.device("cpu"))
+    action, log_prob, value = agent.act(torch.zeros(4).numpy())
+
+    assert action in {0, 1}
+    assert isinstance(log_prob, float)
+    assert isinstance(value, float)
+
+
+def test_vpg_train_smoke(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    config = VPGConfig(
+        epochs=1,
+        steps_per_epoch=64,
+        value_train_iters=2,
+        eval_episodes=1,
+        run_dir=tmp_path / "vpg",
+    )
+    metrics = train(config)
+
+    assert "last_policy_loss" in metrics
+    assert "last_value_loss" in metrics
+    assert metrics["last_eval_return"] > 0.0

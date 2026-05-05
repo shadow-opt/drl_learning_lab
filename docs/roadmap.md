@@ -144,8 +144,8 @@ Each algorithm needs:
 
 Current status:
 
-- VPG core components are implemented
-- full VPG CartPole training remains future work
+- VPG core components and CartPole training loop are implemented
+- PPO remains future work
 
 ## Phase 6: Experiment Engineering
 
