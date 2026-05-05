@@ -7,5 +7,6 @@ TRPO trainer.
 ## Smoke Command
 
 ```bash
+conda run -n drl-lab python labs/05_policy_gradient/trpo/code/trpo_math_demo.py
 conda run -n drl-lab python -m pytest tests/test_trpo.py
 ```
