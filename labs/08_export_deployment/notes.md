@@ -1,32 +1,39 @@
-# Export and Deployment Notes
+# 08 Export Deployment Lab Guide
 
-Every trainable model should eventually run outside the training loop.
+## 前置阅读
 
-## Required Topics
+先读 `course/08_export_deployment.md` 和 `docs/export_checklist.md`。
 
-- `model.eval()`
-- `torch.inference_mode()`
-- TorchScript overview
-- `torch.export`
-- ONNX export
-- ONNXRuntime inference
-- numerical consistency thresholds
-- fixed and dynamic batch dimensions
-- multi-input critic export with named inputs
+## 实验目标
 
-## Current Repository Examples
+- 跑通 export demo。
+- 理解 TorchScript、`torch.export`、ONNX 和 ONNXRuntime 的区别。
+- 检查 PyTorch vs ONNXRuntime 一致性。
 
-- MLP export demo
-- linear regression export
-- binary classifier export
-- DQN Q-network export
-- VPG policy and value-function export
-- PPO policy and value-function export
-- DDPG actor and critic export
-- TD3 actor and twin-critic export
-- SAC actor and twin-critic export
-- TorchScript trace export
-- `torch.export` ExportedProgram export
-- ONNXRuntime consistency checks
-- TorchScript consistency checks
-- `torch.export` consistency checks
+## 代码入口
+
+```bash
+conda run -n drl-lab python labs/08_export_deployment/code/export_demo.py
+```
+
+期望输出包含 `passed=True`、`max_abs_diff` 和 artifact 路径。`max_abs_diff=0` 或接近 0 说明这个小模型在当前输入上通过了一致性检查。
+
+工程实现：
+
+- `src/drl_lab/common/export.py`
+- `src/drl_lab/common/onnx_check.py`
+
+算法训练入口会把最终导出信息写入 run 目录的 `export_report.json`，最终评估写入 `eval_result.json`。
+
+## 提交产物
+
+- 完成 `exercises.md`。
+- 填写 `report.md`。
+- 选择一个算法模型说明其导出输入输出。
+
+## 常见坑
+
+- 导出训练路径而不是推理路径。
+- stochastic policy 导出时仍然采样。
+- 多输入 critic 没有命名输入。
+- dynamic batch 维没有设置。

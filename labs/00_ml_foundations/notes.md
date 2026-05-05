@@ -1,32 +1,34 @@
-# ML Foundations Notes
+# 00 ML Foundations Lab Guide
 
-Focus on the minimum machine learning background needed before deep RL.
+## 前置阅读
 
-## Core Ideas
+先读 `course/00_ml_foundations.md`。本 lab 不再重复完整教材，只负责把监督学习基础落到可运行实验。
 
-- A model maps inputs to predictions.
-- A loss function turns prediction error into a scalar objective.
-- Gradient descent updates parameters to reduce the loss.
-- Generalization matters more than memorizing the training set.
-- A baseline should be simple enough to debug.
+## 实验目标
 
-## Required Topics
+- 跑通线性回归、二分类和 28x28 图像分类 demo。
+- 检查输入输出 shape、loss 曲线、checkpoint 和 ONNX 导出。
+- 记录一次正常训练和一次故意制造的失败。
 
-- supervised learning
-- train/validation/test split
-- linear regression
-- logistic regression
-- classification metrics
-- overfitting and regularization
-- normalization
-- learning curves
-- image classification with `[batch, channels, height, width]` tensors
-- `Dataset`, `DataLoader`, train/validation split, and batched evaluation
+## 代码入口
 
-## Engineering Habits
+```bash
+conda run -n drl-lab python labs/00_ml_foundations/code/linear_regression.py
+conda run -n drl-lab python labs/00_ml_foundations/code/binary_classifier.py
+conda run -n drl-lab python labs/00_ml_foundations/code/image_classifier.py
+```
 
-- Write down input and output shapes.
-- Start with a tiny dataset that the model can overfit.
-- Track loss before adding complexity.
-- Save the config and seed for each experiment.
-- Export the inference graph and compare PyTorch vs ONNXRuntime outputs.
+工程工具在 `src/drl_lab/common/checkpoint.py`、`src/drl_lab/common/export.py` 和 `src/drl_lab/common/onnx_check.py`。
+
+## 提交产物
+
+- 完成 `exercises.md` 中的纸笔题、代码题和观察题。
+- 填写 `report.md`。
+- 确认 `tests/test_supervised_examples.py` 通过。
+
+## 常见坑
+
+- label dtype 和 loss function 不匹配。
+- 忘记 `optimizer.zero_grad()`。
+- eval 时没有 `model.eval()`。
+- ONNX 输出没有和 PyTorch 输出比较。

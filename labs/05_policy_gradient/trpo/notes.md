@@ -1,23 +1,31 @@
-# TRPO Notes
+# TRPO Lab Guide
 
-TRPO is included here as a math-reading module rather than a full benchmark
-implementation. It is useful because it explains the trust-region view behind
-PPO.
+## 前置阅读
 
-## Core Ideas
+先读 `course/05_policy_gradient/trpo.md`。本 lab 是数学阅读模块，不是完整 benchmark trainer。
 
-- Optimize a policy objective while constraining the average KL divergence.
-- Approximate the KL constraint with a local quadratic model.
-- Use the natural-gradient direction instead of the raw policy gradient.
-- Solve the natural-gradient system with conjugate gradient.
-- Use a line search in full implementations to reject bad steps.
+## 实验目标
 
-## Local Code
+- 跑通 TRPO math demo。
+- 理解 conjugate gradient 和 KL step scaling。
+- 对比 TRPO trust region 和 PPO clipping。
 
-`src/drl_lab/algorithms/trpo/math.py` contains:
+## 代码入口
 
-- `conjugate_gradient`
-- `scale_step_to_kl`
+```bash
+conda run -n drl-lab python labs/05_policy_gradient/trpo/code/trpo_math_demo.py
+```
 
-These functions are intentionally small and isolated so the math can be tested
-without adding a fragile full TRPO training loop.
+工程实现：`src/drl_lab/algorithms/trpo/math.py`。测试：`tests/test_trpo.py`。
+
+## 提交产物
+
+- 写出 KL 约束。
+- 填写 `report.md`。
+- 说明为什么当前不实现完整 TRPO trainer。
+
+## 常见坑
+
+- 把 conjugate gradient 当成普通梯度下降。
+- 忽略 KL 方向和 step scaling。
+- 把 TRPO 和 PPO 当成无关算法。

@@ -16,7 +16,7 @@ from drl_lab.algorithms.vpg.config import VPGConfig
 from drl_lab.algorithms.vpg.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
-from drl_lab.common.experiment import save_run_snapshots
+from drl_lab.common.experiment import save_eval_report, save_export_report, save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -171,6 +171,7 @@ def train(config: VPGConfig) -> dict[str, float]:
             last_eval_return = evaluate(agent, config)["return_mean"]
 
     env.close()
+    save_eval_report(config.run_dir, {"return_mean": last_eval_return})
     save_checkpoint(
         config.run_dir / "policy.pt",
         agent.policy,
@@ -199,6 +200,33 @@ def train(config: VPGConfig) -> dict[str, float]:
     value_result = compare_pytorch_onnx(agent.value_function, value_onnx_path, example_input)
     if not value_result.passed:
         raise RuntimeError(f"value ONNX consistency failed: {value_result}")
+    policy_output_shape = list(agent.policy(example_input).shape)
+    value_output_shape = list(agent.value_function(example_input).shape)
+    save_export_report(
+        config.run_dir,
+        {
+            "policy": {
+                "path": onnx_path,
+                "input_names": ["input"],
+                "output_names": ["output"],
+                "input_shape": list(example_input.shape),
+                "output_shape": policy_output_shape,
+                "max_abs_diff": result.max_abs_diff,
+                "mean_abs_diff": result.mean_abs_diff,
+                "passed": result.passed,
+            },
+            "value_function": {
+                "path": value_onnx_path,
+                "input_names": ["input"],
+                "output_names": ["output"],
+                "input_shape": list(example_input.shape),
+                "output_shape": value_output_shape,
+                "max_abs_diff": value_result.max_abs_diff,
+                "mean_abs_diff": value_result.mean_abs_diff,
+                "passed": value_result.passed,
+            },
+        },
+    )
 
     return {
         "last_policy_loss": last_policy_loss,

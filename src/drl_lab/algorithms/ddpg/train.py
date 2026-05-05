@@ -15,7 +15,7 @@ from drl_lab.algorithms.ddpg.config import DDPGConfig
 from drl_lab.algorithms.ddpg.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
-from drl_lab.common.experiment import save_run_snapshots
+from drl_lab.common.experiment import save_eval_report, save_export_report, save_run_snapshots
 from drl_lab.common.export import export_to_onnx, export_to_onnx_multi_input
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx, compare_pytorch_onnx_multi_input
@@ -120,6 +120,7 @@ def train(config: DDPGConfig) -> dict[str, float]:
     env.close()
     final_eval = evaluate(agent, config)
     last_eval_return = final_eval["return_mean"]
+    save_eval_report(config.run_dir, final_eval)
 
     save_checkpoint(
         config.run_dir / "actor.pt",
@@ -156,6 +157,33 @@ def train(config: DDPGConfig) -> dict[str, float]:
     )
     if not critic_result.passed:
         raise RuntimeError(f"critic ONNX consistency failed: {critic_result}")
+    actor_output_shape = list(agent.actor(example_input).shape)
+    critic_output_shape = list(agent.critic(example_input, example_action).shape)
+    save_export_report(
+        config.run_dir,
+        {
+            "actor": {
+                "path": onnx_path,
+                "input_names": ["input"],
+                "output_names": ["output"],
+                "input_shape": list(example_input.shape),
+                "output_shape": actor_output_shape,
+                "max_abs_diff": result.max_abs_diff,
+                "mean_abs_diff": result.mean_abs_diff,
+                "passed": result.passed,
+            },
+            "critic": {
+                "path": critic_onnx_path,
+                "input_names": ["obs", "actions"],
+                "output_names": ["q"],
+                "input_shape": [list(example_input.shape), list(example_action.shape)],
+                "output_shape": critic_output_shape,
+                "max_abs_diff": critic_result.max_abs_diff,
+                "mean_abs_diff": critic_result.mean_abs_diff,
+                "passed": critic_result.passed,
+            },
+        },
+    )
 
     return {
         "last_actor_loss": last_actor_loss,

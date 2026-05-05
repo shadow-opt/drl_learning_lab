@@ -1,11 +1,28 @@
 # PPO Report
 
-PPO tensors, GAE, clipped objective, diagnostics, CartPole training,
-checkpointing, eval, and actor ONNX export are implemented.
+## 本章目标
 
-## Smoke Command
+理解 clipped objective、GAE、KL monitoring 和 entropy bonus。
+
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/05_policy_gradient/ppo/code/ppo_core_demo.py
-conda run -n drl-lab python -m drl_lab.algorithms.ppo.train --epochs 1 --steps-per-epoch 128
+
 ```
+
+## 关键观察
+
+- ratio：
+- clip fraction：
+- approx KL：
+- policy/value loss：
+
+## 出错记录
+
+- 现象：
+- 定位：
+- 修复：
+
+## 我真正理解了什么
+
+解释 PPO 为什么比 VPG 更稳定。

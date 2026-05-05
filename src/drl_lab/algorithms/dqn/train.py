@@ -15,7 +15,7 @@ from drl_lab.algorithms.dqn.config import DQNConfig
 from drl_lab.algorithms.dqn.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
-from drl_lab.common.experiment import save_run_snapshots
+from drl_lab.common.experiment import save_eval_report, save_export_report, save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -102,6 +102,7 @@ def train(config: DQNConfig) -> dict[str, float]:
     env.close()
     final_eval = evaluate(agent, config)
     last_eval_return = final_eval["return_mean"]
+    save_eval_report(config.run_dir, final_eval)
 
     save_checkpoint(
         config.run_dir / "q_network.pt",
@@ -116,6 +117,22 @@ def train(config: DQNConfig) -> dict[str, float]:
     result = compare_pytorch_onnx(agent.q_network, onnx_path, example_input)
     if not result.passed:
         raise RuntimeError(f"ONNX consistency failed: {result}")
+    output_shape = list(agent.q_network(example_input).shape)
+    save_export_report(
+        config.run_dir,
+        {
+            "q_network": {
+                "path": onnx_path,
+                "input_names": ["input"],
+                "output_names": ["output"],
+                "input_shape": list(example_input.shape),
+                "output_shape": output_shape,
+                "max_abs_diff": result.max_abs_diff,
+                "mean_abs_diff": result.mean_abs_diff,
+                "passed": result.passed,
+            }
+        },
+    )
 
     return {"last_loss": last_loss, "last_eval_return": last_eval_return}
 

@@ -1,15 +1,27 @@
 # ML Foundations Exercises
 
-1. Implement linear regression with synthetic data.
-2. Train a binary classifier on two Gaussian clusters.
-3. Train a small 28x28 image classifier with `Dataset` and `DataLoader`.
-4. Plot or log training loss for each run.
-5. Overfit a tiny dataset intentionally.
-6. Write a short report explaining when training failed and why.
+## 纸笔题
 
-Each exercise should produce:
+1. 写出线性回归的预测公式和 MSE loss。
+2. 解释 learning rate 过大时 loss 为什么可能发散。
+3. 用自己的话区分 underfitting 和 overfitting。
+4. 说明为什么图像 batch shape 使用 `[batch, channels, height, width]`。
 
-- notes
-- runnable code
-- one report
-- at least one test or smoke check
+## 代码题
+
+1. 跑通三个 demo：linear regression、binary classifier、image classifier。
+2. 把 linear regression 的 learning rate 调大 10 倍，记录 loss 变化。
+3. 找到每个 demo 写 checkpoint 和 ONNX 的代码位置。
+4. 对照 `tests/test_supervised_examples.py`，说明测试验证了什么。
+
+## 观察题
+
+1. 每个 demo 的 loss 是否下降？如果没有，先怀疑什么？
+2. checkpoint 恢复后输出是否应保持一致？为什么？
+3. ONNXRuntime 和 PyTorch 输出误差是否在容差内？
+
+## 提交物
+
+- 填完 `report.md`。
+- 贴出至少一个运行命令。
+- 写下一个你故意制造并定位的失败。

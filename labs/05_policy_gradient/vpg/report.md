@@ -1,11 +1,28 @@
 # VPG Report
 
-VPG tensors, losses, networks, CartPole training, checkpointing, eval, and
-actor ONNX export are implemented.
+## 本章目标
 
-## Smoke Command
+理解 policy gradient、return-to-go、advantage 和 value baseline。
+
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/05_policy_gradient/vpg/code/vpg_core_demo.py
-conda run -n drl-lab python -m drl_lab.algorithms.vpg.train --epochs 1 --steps-per-epoch 128
+
 ```
+
+## 关键观察
+
+- policy loss：
+- value loss：
+- advantage：
+- export：
+
+## 出错记录
+
+- 现象：
+- 定位：
+- 修复：
+
+## 我真正理解了什么
+
+解释 `log_prob * advantage` 的意义。

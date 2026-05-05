@@ -1,10 +1,29 @@
 # TD3 Report
 
-TD3 core components and a minimal Pendulum training loop are implemented.
+## 本章目标
 
-## Smoke Command
+理解 TD3 如何修正 DDPG 的过估计和训练不稳定。
+
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/05_policy_gradient/td3/code/td3_core_demo.py
-conda run -n drl-lab python -m drl_lab.algorithms.td3.train --total-steps 300 --learning-starts 32 --eval-episodes 1
+
 ```
+
+## 关键观察
+
+- critic loss：
+- actor update interval：
+- target noise：
+- eval return：
+- export：
+
+## 出错记录
+
+- 现象：
+- 定位：
+- 修复：
+
+## 我真正理解了什么
+
+解释 TD3 三项 trick 分别解决什么问题。

@@ -1,25 +1,31 @@
-# VPG Notes
+# VPG Lab Guide
 
-Vanilla Policy Gradient is the first policy-gradient algorithm in the Spinning
-Up sequence.
+## 前置阅读
 
-## Required Implementation Pieces
+先读 `course/05_policy_gradient/vpg.md`，再对照 Spinning Up VPG。
 
-- categorical actor for discrete actions
-- value function baseline
-- trajectory buffer
-- reward-to-go
-- advantage normalization
-- actor loss
-- value loss
-- actor ONNX export
+## 实验目标
 
-## Implemented
+- 跑通 VPG core demo。
+- 检查 trajectory buffer、return-to-go、advantage normalization。
+- 理解 policy loss 和 value loss 的输入 shape。
 
-- categorical actor
-- value function baseline
-- discounted cumulative sums
-- trajectory batch builder
-- advantage normalization
-- policy and value losses
-- actor ONNX export consistency test
+## 代码入口
+
+```bash
+conda run -n drl-lab python labs/05_policy_gradient/vpg/code/vpg_core_demo.py
+```
+
+工程实现：`src/drl_lab/algorithms/vpg`。测试：`tests/test_vpg.py`。
+
+## 提交产物
+
+- 写出 VPG policy loss。
+- 填写 `report.md`。
+- 说明 actor ONNX export 为什么只使用 deterministic inference path。
+
+## 常见坑
+
+- advantage 没有标准化。
+- log prob 不是采样 action 的 log prob。
+- policy loss 符号写反。

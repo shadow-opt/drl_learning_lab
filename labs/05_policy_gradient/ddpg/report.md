@@ -1,10 +1,29 @@
 # DDPG Report
 
-DDPG core components and a minimal Pendulum training loop are implemented.
+## 本章目标
 
-## Smoke Command
+理解 deterministic actor-critic、target networks、replay buffer 和 continuous action export。
+
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/05_policy_gradient/ddpg/code/ddpg_core_demo.py
-conda run -n drl-lab python -m drl_lab.algorithms.ddpg.train --total-steps 300 --learning-starts 32 --eval-episodes 1
+
 ```
+
+## 关键观察
+
+- actor loss：
+- critic loss：
+- eval return：
+- actor export：
+- critic export：
+
+## 出错记录
+
+- 现象：
+- 定位：
+- 修复：
+
+## 我真正理解了什么
+
+解释 actor 如何通过 critic 学习。

@@ -1,17 +1,36 @@
 # Spinning Up Track Report
 
-Use this report to summarize what was learned from mapping Spinning Up into the
-local lab structure.
+## 本章目标
 
-## Current Status
+理解 Spinning Up 如何作为外部 DRL 主参考，并把它映射到本仓库的中文课程和现代 PyTorch 实现。
 
-- DQN is tracked as a local addition outside Spinning Up's classic algorithm
-  set.
-- VPG, PPO, DDPG, TD3, and SAC have local implementations and mapping notes.
-- TRPO is represented as a math-reading module with tested utilities.
-
-## Smoke Command
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/06_spinningup_track/code/list_mappings.py
+
 ```
+
+## 选择的算法
+
+- 算法：
+- Spinning Up 讲解重点：
+- 本仓库 course：
+- 本仓库 lab：
+- 本仓库 src：
+
+## 差异记录
+
+- 概念是否一致：
+- 工程实现差异：
+- 测试/导出补充：
+
+## 我真正理解了什么
+
+说明为什么本仓库不是 Spinning Up 的复制版。
+
+## 出错记录
+
+- 卡住的阅读点：
+- 对应仓库章节：
+- 我回到哪个 demo 或源码验证：
+- 后续处理：

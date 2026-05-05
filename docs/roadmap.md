@@ -1,195 +1,74 @@
 # Roadmap
 
-This roadmap keeps the lab small at the start and grows it only when a learning
-slice has notes, exercises, code, reports, and tests.
+这个 roadmap 用来追踪 `drl_learning_lab` 的完整学习路线。仓库的主入口是 `README.md` 和 `course/index.md`；本文件负责说明阶段目标、产物和完成标准。
 
-For a concrete first-month execution order, use `docs/first_month_plan.md`.
+当前自学可用性验收见 `docs/self_study_audit.md`。
 
-## Phase 0: Engineering Baseline
+## 总原则
 
-Goal: make the repository runnable, testable, and reproducible.
+每个学习模块都必须形成学习闭环：
 
-Deliverables:
+```text
+course 讲义 -> labs 练习和 demo -> src 工程实现 -> tests 验收 -> report 复盘
+```
 
-- conda environment
-- editable Python package under `src/drl_lab`
-- seed, device, checkpoint, export, and ONNX consistency helpers
-- pytest smoke tests
-- git workflow documented in `README.md`
+不要只增加脚本。新增算法或主题时，必须同步补充课程说明、实验任务、报告模板、测试；如果涉及可训练神经网络，还必须补充 checkpoint、eval、导出说明和一致性检查。数学阅读模块可以没有训练入口。
 
-Exercises:
+## 进度矩阵
 
-- Set a seed and prove two model initializations match.
-- Save and reload a checkpoint.
-- Export a small MLP to ONNX and compare PyTorch vs ONNXRuntime outputs.
+| 阶段 | 主题 | Course | Lab | Tests | Export | 状态 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 00 | ML Foundations | `course/00_ml_foundations.md` | `labs/00_ml_foundations` | supervised tests | ONNX | usable |
+| 01 | PyTorch Foundations | `course/01_pytorch_foundations.md` | `labs/01_pytorch_foundations` | checkpoint/export tests | TorchScript/ONNX | usable |
+| 02 | RL Math | `course/02_rl_math.md` | `labs/02_rl_math` | tabular tests | N/A | usable |
+| 03 | Tabular RL | `course/03_tabular_rl.md` | `labs/03_tabular_rl` | tabular tests | N/A | usable |
+| 04 | DQN | `course/04_dqn.md` | `labs/04_dqn` | DQN tests | ONNX | usable |
+| 05 | Policy Gradient | `course/05_policy_gradient` | `labs/05_policy_gradient` | algorithm tests | ONNX where applicable | usable |
+| 06 | Spinning Up Track | `course/06_spinningup_track.md` | `labs/06_spinningup_track` | structure tests | N/A | usable |
+| 07 | Experiment Engineering | `course/07_experiment_engineering.md` | `labs/07_experiment_engineering` | snapshot tests | artifacts | usable |
+| 08 | Export Deployment | `course/08_export_deployment.md` | `labs/08_export_deployment` | export tests | ONNXRuntime | usable |
 
-## Phase 1: ML and PyTorch Foundations
+状态含义：
 
-Goal: build enough supervised learning and PyTorch engineering skill to make
-deep RL implementation manageable.
+- `usable`：可按文档完成学习闭环。
+- `complete`：内容、实验、测试、导出和外部对照都充分成熟。
 
-Topics:
+## 阶段目标
 
-- tensor shape annotation and broadcasting
-- autograd, optimizers, and schedulers
-- train/eval mode
-- `torch.no_grad` and `torch.inference_mode`
-- `Dataset` and `DataLoader`
-- device and dtype management
-- checkpoint, resume, eval, and export
+### 00-01：ML / PyTorch 基础
 
-Deliverables:
+目标：掌握后续 DRL 实现需要的监督学习、训练循环、shape、device/dtype、checkpoint、eval、export。
 
-- linear regression
-- binary classifier MLP
-- MNIST or FashionMNIST classifier
-- ONNX export and consistency tests for each trainable model
+产物：线性回归、二分类、图像分类、MLP export demo、ONNXRuntime 一致性检查。
 
-Current status:
+### 02-03：RL 数学与 Tabular RL
 
-- linear regression is implemented
-- binary classifier is implemented
-- a small 28x28 image classifier is implemented with an offline synthetic
-  dataset; swapping in MNIST or FashionMNIST remains an optional extension when
-  `torchvision` is available
+目标：在没有神经网络的情况下理解 MDP、return、Bellman、MC、TD、SARSA、Expected SARSA、Q-learning。
 
-## Phase 2: RL Math
+产物：GridWorld、value iteration、policy iteration、MC control、TD control、Q-learning 报告。
 
-Goal: understand the math before adding neural networks.
+### 04：DQN
 
-Topics:
+目标：把 tabular Q-learning 扩展到神经网络近似，理解 replay buffer、target network、TD target 和 Q-network export。
 
-- MDPs
-- return and discounting
-- value functions
-- Bellman expectation and optimality equations
-- policy evaluation and improvement
-- Monte Carlo vs temporal difference learning
-- bias and variance
-- advantage and GAE
+产物：DQN smoke demo、CartPole 短训练、checkpoint、eval、ONNX。
 
-Deliverables:
+### 05-06：Spinning Up 主线
 
-- handwritten notes
-- small GridWorld examples
-- value iteration and policy iteration code
+目标：学习 VPG、PPO、TRPO、DDPG、TD3、SAC，并把 Spinning Up 概念映射到本仓库现代 PyTorch 实现。
 
-Current status:
+产物：每个算法的讲义、core demo、报告和测试；VPG、PPO、DDPG、TD3、SAC 有训练入口和 ONNX 导出，TRPO 当前是数学阅读模块，不提供完整 trainer。
 
-- deterministic GridWorld is implemented
-- value iteration is implemented
-- policy iteration is implemented
+### 07-08：实验工程与导出部署
 
-## Phase 3: Tabular RL
+目标：让训练结果可复现、可 debug、可导出、可独立推理。
 
-Goal: learn the update rules without neural network complexity.
+产物：config/environment snapshot、metrics、checkpoint、`eval_result.json`、`export_report.json`、TorchScript、`torch.export`、ONNX、ONNXRuntime 一致性报告。
 
-Algorithms:
+## 质量门禁
 
-- Monte Carlo control
-- SARSA
-- Q-learning
-- Expected SARSA
-
-Deliverables:
-
-- FrozenLake or CliffWalking experiments
-- epsilon-greedy comparisons
-- convergence reports
-
-Current status:
-
-- local GridWorld value iteration, policy iteration, Monte Carlo control,
-  Q-learning, SARSA, and Expected SARSA are implemented
-
-## Phase 4: DQN
-
-Goal: bridge PyTorch engineering and RL.
-
-Required components:
-
-- replay buffer
-- target network
-- epsilon schedule
-- Huber loss
-- gradient clipping
-- checkpoint and eval
-- Q-network ONNX export
-
-Current status:
-
-- replay buffer, Q-network, DQN loss, smoke demo, and ONNX consistency tests are
-  implemented
-- CartPole training loop, checkpoint, eval hook, and Q-network export are
-  implemented
-
-## Phase 5: Spinning Up Main Track
-
-Goal: study Spinning Up as the DRL conceptual backbone while writing modern
-PyTorch implementations.
-
-Order:
-
-1. VPG
-2. PPO
-3. DDPG
-4. TD3
-5. SAC
-6. TRPO as math reading and optional implementation
-
-Each algorithm needs:
-
-- notes
-- exercises
-- implementation
-- experiment report
-- Spinning Up mapping note
-- ONNX export test for inference networks
-
-Current status:
-
-- VPG core components and CartPole training loop are implemented
-- PPO core components and CartPole training loop are implemented
-- DDPG core components and Pendulum training loop are implemented
-- TD3 core components and Pendulum training loop are implemented
-- SAC core components and Pendulum training loop are implemented
-- TRPO math-reading utilities are implemented for conjugate gradient and
-  KL-constrained step scaling
-
-## Phase 6: Experiment Engineering
-
-Goal: make experiments reproducible and debuggable.
-
-Topics:
-
-- config snapshots
-- CSV or JSONL metrics
-- TensorBoard
-- seed discipline
-- checkpoint structure
-- independent eval scripts
-- failure reports
-
-Current status:
-
-- training entrypoints save `config.json`, `environment.json`, CSV metrics,
-  checkpoints, and export consistency artifacts
-
-## Phase 7: Export and Deployment
-
-Goal: every trained model can run outside the training loop.
-
-Topics:
-
-- TorchScript overview
-- `torch.export`
-- ONNX export
-- ONNXRuntime inference
-- numerical consistency tests
-- fixed vs dynamic batch shapes
-
-Current status:
-
-- trainable supervised models, Q-networks, policy networks, value functions,
-  actors, and critics are exported to ONNX with PyTorch vs ONNXRuntime
-  consistency checks
+```bash
+conda run -n drl-lab python -m pytest
+conda run -n drl-lab ruff check .
+conda run -n drl-lab mypy src
+```

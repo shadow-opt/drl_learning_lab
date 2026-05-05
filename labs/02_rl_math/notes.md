@@ -1,25 +1,34 @@
-# RL Math Notes
+# 02 RL Math Lab Guide
 
-This module builds the math needed before deep RL.
+## 前置阅读
 
-## Core Definitions
+先读 `course/02_rl_math.md`。本 lab 只用 GridWorld 和 value iteration，把 Bellman backup 从公式落到代码。
 
-- State: information available to the agent.
-- Action: decision made by the agent.
-- Reward: scalar feedback.
-- Transition: environment dynamics.
-- Policy: mapping from states to actions or action probabilities.
-- Return: discounted sum of future rewards.
-- Value function: expected return from a state or state-action pair.
+## 实验目标
 
-## Required Topics
+- 跑通 value iteration demo。
+- 手算一个 state 的 Bellman backup。
+- 改变 discount factor，观察 value 变化。
 
-- Markov decision processes
-- Bellman expectation equation
-- Bellman optimality equation
-- policy evaluation
-- policy improvement
-- Monte Carlo learning
-- temporal difference learning
-- advantage estimation
-- bias and variance
+## 代码入口
+
+```bash
+conda run -n drl-lab python labs/02_rl_math/code/value_iteration_demo.py
+```
+
+工程实现：
+
+- `src/drl_lab/algorithms/tabular/gridworld.py`
+- `src/drl_lab/algorithms/tabular/value_iteration.py`
+
+## 提交产物
+
+- 完成 `exercises.md`。
+- 填写 `report.md`。
+- 能解释 terminal state 为什么不能继续 bootstrap。
+
+## 常见坑
+
+- reward、next state、done 的时间顺序搞混。
+- 把 Bellman expectation 和 Bellman optimality 混为一谈。
+- terminal state 仍然加上未来 value。

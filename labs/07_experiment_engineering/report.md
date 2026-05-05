@@ -1,17 +1,30 @@
 # Experiment Engineering Report
 
-Use this module to record improvements to logging, config, checkpointing, and
-debugging.
+## 本章目标
 
-## Current Status
+理解实验可复现、可检查、可失败复盘的基本要求。
 
-- `drl_lab.common.experiment.save_run_snapshots` writes `config.json` and
-  `environment.json`.
-- Supervised learning, DQN, VPG, PPO, DDPG, TD3, and SAC training entrypoints
-  save run snapshots before training.
-
-## Smoke Command
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/07_experiment_engineering/code/snapshot_demo.py
+
 ```
+
+## 产物清单
+
+- config：
+- environment：
+- metrics：
+- checkpoint：
+- export：
+
+## 出错记录
+
+- 现象：
+- 初步假设：
+- 定位过程：
+- 修复方法：
+
+## 我真正理解了什么
+
+说明为什么只保存最终模型不够。

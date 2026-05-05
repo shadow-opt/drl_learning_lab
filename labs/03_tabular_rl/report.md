@@ -1,18 +1,46 @@
 # Tabular RL Report
 
-Use `docs/experiment_report_template.md` for each experiment.
+## 本章目标
 
-## Current Status
+我要掌握的算法：
 
-GridWorld, value iteration, policy iteration, Monte Carlo control, Q-learning,
-SARSA, and Expected SARSA are implemented.
+- Value Iteration / Policy Iteration
+- Monte Carlo Control
+- SARSA / Expected SARSA / Q-learning
 
-## Smoke Commands
+## 运行命令
 
 ```bash
-conda run -n drl-lab python labs/03_tabular_rl/code/value_iteration_demo.py
-conda run -n drl-lab python labs/03_tabular_rl/code/policy_iteration_demo.py
-conda run -n drl-lab python labs/03_tabular_rl/code/monte_carlo_control_demo.py
-conda run -n drl-lab python labs/03_tabular_rl/code/q_learning_demo.py
-conda run -n drl-lab python labs/03_tabular_rl/code/td_control_demo.py
+
 ```
+
+## 关键观察
+
+- VI/PI policy：
+- MC control 结果：
+- SARSA 结果：
+- Expected SARSA 结果：
+- Q-learning 结果：
+
+## 对比分析
+
+选择两个算法比较：
+
+- 相同点：
+- 不同点：
+- 我观察到的现象：
+
+## 出错记录
+
+- 现象：
+- 初步假设：
+- 定位过程：
+- 修复方法：
+
+## 我真正理解了什么
+
+用自己的话解释 on-policy/off-policy 或 MC/TD 的差异。
+
+## 遗留问题
+
+进入 DQN 前还不清楚的问题：

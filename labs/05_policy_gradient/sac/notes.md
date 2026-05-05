@@ -1,40 +1,32 @@
-# SAC Notes
+# SAC Lab Guide
 
-Soft Actor-Critic is an off-policy actor-critic algorithm for continuous action
-spaces. It extends clipped double Q-learning with a stochastic actor and an
-entropy bonus, so the policy is rewarded for both high value and sufficient
-exploration.
+## 前置阅读
 
-## Core Equations
+先读 `course/05_policy_gradient/sac.md`。SAC 应在 DDPG/TD3 后学习。
 
-Critic target:
+## 实验目标
 
-```text
-y = r + gamma * (1 - done) * (min(Q1_target(s', a'), Q2_target(s', a')) - alpha * log pi(a'|s'))
+- 跑通 SAC core demo。
+- 检查 squashed Gaussian actor、twin critics、entropy term 和 alpha。
+- 跑一个短 Pendulum 训练并检查 ONNX export。
+
+## 代码入口
+
+```bash
+conda run -n drl-lab python labs/05_policy_gradient/sac/code/sac_core_demo.py
+conda run -n drl-lab python -m drl_lab.algorithms.sac.train --total-steps 300 --learning-starts 32 --eval-episodes 1
 ```
 
-Actor objective:
+工程实现：`src/drl_lab/algorithms/sac`。测试：`tests/test_sac.py`。
 
-```text
-J_pi = E[alpha * log pi(a|s) - min(Q1(s, a), Q2(s, a))]
-```
+## 提交产物
 
-Temperature objective:
+- 写出 SAC critic target 和 actor objective。
+- 填写 `report.md`。
+- 说明 actor 训练采样路径和导出 deterministic 路径的区别。
 
-```text
-J_alpha = -log_alpha * stop_gradient(log pi(a|s) + target_entropy)
-```
+## 常见坑
 
-## Implementation Notes
-
-- The actor is a reparameterized Gaussian followed by `tanh`.
-- The log probability must include the `tanh` correction.
-- `forward` returns deterministic mean actions and is the export path.
-- `sample` is used only during training losses.
-- Replay, target critics, and Polyak updates reuse the DDPG/TD3 components.
-
-## Spinning Up Mapping
-
-Spinning Up's SAC chapter is the conceptual reference. This lab keeps the same
-algorithmic ideas but uses modern PyTorch modules, explicit shape checks, small
-unit tests, and ONNX export for the deterministic inference actor.
+- tanh log prob correction 漏掉。
+- alpha loss 符号或 detach 错误。
+- 导出时仍包含 stochastic sampling。
