@@ -142,6 +142,11 @@ Each algorithm needs:
 - Spinning Up mapping note
 - ONNX export test for inference networks
 
+Current status:
+
+- VPG core components are implemented
+- full VPG CartPole training remains future work
+
 ## Phase 6: Experiment Engineering
 
 Goal: make experiments reproducible and debuggable.

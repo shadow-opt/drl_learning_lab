@@ -13,3 +13,13 @@ Up sequence.
 - actor loss
 - value loss
 - actor ONNX export
+
+## Implemented
+
+- categorical actor
+- value function baseline
+- discounted cumulative sums
+- trajectory batch builder
+- advantage normalization
+- policy and value losses
+- actor ONNX export consistency test
