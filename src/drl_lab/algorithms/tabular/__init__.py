@@ -12,6 +12,7 @@ from drl_lab.algorithms.tabular.q_learning import (
     epsilon_greedy_action,
     expected_epsilon_greedy_value,
     expected_sarsa,
+    monte_carlo_control,
     q_learning,
     sarsa,
 )
@@ -27,6 +28,7 @@ __all__ = [
     "expected_epsilon_greedy_value",
     "expected_sarsa",
     "improve_policy",
+    "monte_carlo_control",
     "policy_iteration",
     "q_learning",
     "sarsa",

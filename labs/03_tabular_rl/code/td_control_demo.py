@@ -9,6 +9,7 @@ from drl_lab.algorithms.tabular import (
     GridWorld,
     TabularControlConfig,
     expected_sarsa,
+    monte_carlo_control,
     q_learning,
     sarsa,
 )
@@ -28,6 +29,7 @@ def run(name: str, fn: ControlFn) -> None:
 
 
 def main() -> None:
+    run("monte_carlo_control", monte_carlo_control)
     run("q_learning", q_learning)
     run("sarsa", sarsa)
     run("expected_sarsa", expected_sarsa)

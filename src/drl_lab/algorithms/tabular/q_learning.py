@@ -20,6 +20,8 @@ class QLearningConfig:
 
 TabularControlConfig = QLearningConfig
 
+Episode = list[tuple[int, int, float]]
+
 
 def epsilon_greedy_action(
     q_values: NDArray[np.float64],
@@ -95,6 +97,57 @@ def q_learning(
                 break
 
         episode_returns.append(total_reward)
+
+    return q_values, episode_returns
+
+
+def monte_carlo_control(
+    env: GridWorld,
+    config: TabularControlConfig | None = None,
+    first_visit: bool = True,
+) -> tuple[NDArray[np.float64], list[float]]:
+    """Train epsilon-greedy Monte Carlo control on GridWorld.
+
+    The implementation uses incremental sample-average returns for each
+    state-action pair. It updates only after each full episode has finished.
+    """
+    cfg = config or TabularControlConfig()
+    _validate_config(cfg)
+
+    rng = np.random.default_rng(cfg.seed)
+    q_values = np.zeros((env.n_states, env.n_actions), dtype=np.float64)
+    visit_counts = np.zeros((env.n_states, env.n_actions), dtype=np.int64)
+    episode_returns: list[float] = []
+
+    for _ in range(cfg.episodes):
+        state = env.reset()
+        episode: Episode = []
+        total_reward = 0.0
+
+        for _step in range(cfg.max_steps_per_episode):
+            action = epsilon_greedy_action(q_values, state, cfg.epsilon, rng)
+            next_state, reward, done = env.step(action)
+            episode.append((state, action, reward))
+            total_reward += reward
+            state = next_state
+            if done:
+                break
+
+        episode_returns.append(total_reward)
+        returns_seen: set[tuple[int, int]] = set()
+        discounted_return = 0.0
+        for state_t, action_t, reward_t in reversed(episode):
+            discounted_return = reward_t + cfg.gamma * discounted_return
+            state_action = (state_t, action_t)
+            if first_visit and state_action in returns_seen:
+                continue
+            returns_seen.add(state_action)
+
+            visit_counts[state_t, action_t] += 1
+            count = visit_counts[state_t, action_t]
+            q_values[state_t, action_t] += (
+                discounted_return - q_values[state_t, action_t]
+            ) / count
 
     return q_values, episode_returns
 

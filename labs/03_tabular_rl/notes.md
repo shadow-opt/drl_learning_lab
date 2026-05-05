@@ -20,6 +20,7 @@ Then move to Gymnasium FrozenLake or CliffWalking.
 - value iteration
 - policy iteration
 - epsilon-greedy action selection
+- Monte Carlo control
 - Q-learning
 - SARSA
 - Expected SARSA

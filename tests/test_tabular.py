@@ -8,6 +8,7 @@ from drl_lab.algorithms.tabular import (
     TabularControlConfig,
     expected_epsilon_greedy_value,
     expected_sarsa,
+    monte_carlo_control,
     policy_iteration,
     q_learning,
     sarsa,
@@ -51,6 +52,24 @@ def test_q_learning_learns_terminal_neighbor_action() -> None:
 
     assert q_values.shape == (env.n_states, env.n_actions)
     assert len(returns) == 500
+    assert int(q_values[14].argmax()) == 1
+
+
+def test_monte_carlo_control_learns_terminal_neighbor_action() -> None:
+    env = GridWorld()
+    q_values, returns = monte_carlo_control(
+        env,
+        TabularControlConfig(
+            episodes=1_000,
+            max_steps_per_episode=50,
+            gamma=1.0,
+            epsilon=0.2,
+            seed=5,
+        ),
+    )
+
+    assert q_values.shape == (env.n_states, env.n_actions)
+    assert len(returns) == 1_000
     assert int(q_values[14].argmax()) == 1
 
 

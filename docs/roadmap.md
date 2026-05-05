@@ -74,7 +74,7 @@ Current status:
 
 - deterministic GridWorld is implemented
 - value iteration is implemented
-- policy iteration remains future work
+- policy iteration is implemented
 
 ## Phase 3: Tabular RL
 
@@ -95,8 +95,8 @@ Deliverables:
 
 Current status:
 
-- local GridWorld value iteration, policy iteration, Q-learning, SARSA, and
-  Expected SARSA are implemented
+- local GridWorld value iteration, policy iteration, Monte Carlo control,
+  Q-learning, SARSA, and Expected SARSA are implemented
 
 ## Phase 4: DQN
 
