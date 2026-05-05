@@ -4,5 +4,6 @@
 2. Run policy iteration and compare values against value iteration.
 3. Change the discount factor and describe the value changes.
 4. Run Q-learning and inspect the greedy policy.
-5. Implement SARSA as the next exercise.
-6. Move Q-learning to Gymnasium FrozenLake.
+5. Run SARSA and compare the greedy policy against Q-learning.
+6. Run Expected SARSA and compare average returns.
+7. Move Q-learning to Gymnasium FrozenLake.

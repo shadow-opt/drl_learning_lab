@@ -5,8 +5,12 @@ import numpy as np
 from drl_lab.algorithms.tabular import (
     GridWorld,
     QLearningConfig,
+    TabularControlConfig,
+    expected_epsilon_greedy_value,
+    expected_sarsa,
     policy_iteration,
     q_learning,
+    sarsa,
     value_iteration,
 )
 
@@ -47,4 +51,49 @@ def test_q_learning_learns_terminal_neighbor_action() -> None:
 
     assert q_values.shape == (env.n_states, env.n_actions)
     assert len(returns) == 500
+    assert int(q_values[14].argmax()) == 1
+
+
+def test_expected_epsilon_greedy_value() -> None:
+    q_values = np.asarray([[1.0, 3.0]], dtype=np.float64)
+    value = expected_epsilon_greedy_value(q_values, state=0, epsilon=0.2)
+
+    assert np.isclose(value, 2.8)
+
+
+def test_sarsa_learns_terminal_neighbor_action() -> None:
+    env = GridWorld()
+    q_values, returns = sarsa(
+        env,
+        TabularControlConfig(
+            episodes=600,
+            max_steps_per_episode=50,
+            alpha=0.3,
+            gamma=1.0,
+            epsilon=0.15,
+            seed=3,
+        ),
+    )
+
+    assert q_values.shape == (env.n_states, env.n_actions)
+    assert len(returns) == 600
+    assert int(q_values[14].argmax()) == 1
+
+
+def test_expected_sarsa_learns_terminal_neighbor_action() -> None:
+    env = GridWorld()
+    q_values, returns = expected_sarsa(
+        env,
+        TabularControlConfig(
+            episodes=600,
+            max_steps_per_episode=50,
+            alpha=0.3,
+            gamma=1.0,
+            epsilon=0.15,
+            seed=4,
+        ),
+    )
+
+    assert q_values.shape == (env.n_states, env.n_actions)
+    assert len(returns) == 600
     assert int(q_values[14].argmax()) == 1

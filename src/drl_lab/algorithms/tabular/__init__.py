@@ -8,8 +8,12 @@ from drl_lab.algorithms.tabular.policy_iteration import (
 )
 from drl_lab.algorithms.tabular.q_learning import (
     QLearningConfig,
+    TabularControlConfig,
     epsilon_greedy_action,
+    expected_epsilon_greedy_value,
+    expected_sarsa,
     q_learning,
+    sarsa,
 )
 from drl_lab.algorithms.tabular.value_iteration import value_iteration
 
@@ -17,10 +21,14 @@ __all__ = [
     "GridWorld",
     "GridWorldConfig",
     "QLearningConfig",
+    "TabularControlConfig",
     "epsilon_greedy_action",
     "evaluate_policy",
+    "expected_epsilon_greedy_value",
+    "expected_sarsa",
     "improve_policy",
     "policy_iteration",
     "q_learning",
+    "sarsa",
     "value_iteration",
 ]

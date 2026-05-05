@@ -95,8 +95,8 @@ Deliverables:
 
 Current status:
 
-- local GridWorld value iteration, policy iteration, and Q-learning are
-  implemented
+- local GridWorld value iteration, policy iteration, Q-learning, SARSA, and
+  Expected SARSA are implemented
 
 ## Phase 4: DQN
 

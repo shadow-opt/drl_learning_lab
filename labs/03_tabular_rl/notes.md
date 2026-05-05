@@ -21,3 +21,5 @@ Then move to Gymnasium FrozenLake or CliffWalking.
 - policy iteration
 - epsilon-greedy action selection
 - Q-learning
+- SARSA
+- Expected SARSA
