@@ -22,6 +22,8 @@ def test_linear_regression_learns_small_problem(tmp_path) -> None:  # type: igno
     config = module.LinearRegressionConfig(epochs=80, run_dir=tmp_path / "linear")
     _, final_loss = module.train(config)
     assert final_loss < 0.05
+    assert (config.run_dir / "config.json").exists()
+    assert (config.run_dir / "environment.json").exists()
 
 
 def test_binary_classifier_learns_small_problem(tmp_path) -> None:  # type: ignore[no-untyped-def]
@@ -29,6 +31,8 @@ def test_binary_classifier_learns_small_problem(tmp_path) -> None:  # type: igno
     config = module.BinaryClassifierConfig(epochs=80, run_dir=tmp_path / "binary")
     _, final_accuracy = module.train(config)
     assert final_accuracy > 0.98
+    assert (config.run_dir / "config.json").exists()
+    assert (config.run_dir / "environment.json").exists()
 
 
 def test_image_classifier_learns_small_problem(tmp_path) -> None:  # type: ignore[no-untyped-def]
@@ -40,3 +44,5 @@ def test_image_classifier_learns_small_problem(tmp_path) -> None:  # type: ignor
     )
     _, final_accuracy = module.train(config)
     assert final_accuracy > 0.7
+    assert (config.run_dir / "config.json").exists()
+    assert (config.run_dir / "environment.json").exists()

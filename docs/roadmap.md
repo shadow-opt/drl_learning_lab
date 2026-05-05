@@ -166,6 +166,11 @@ Topics:
 - independent eval scripts
 - failure reports
 
+Current status:
+
+- training entrypoints save `config.json`, `environment.json`, CSV metrics,
+  checkpoints, and export consistency artifacts
+
 ## Phase 7: Export and Deployment
 
 Goal: every trained model can run outside the training loop.

@@ -119,6 +119,8 @@ def test_ddpg_short_training_loop_writes_artifacts(tmp_path) -> None:  # type: i
 
     assert "last_eval_return" in metrics
     assert (config.run_dir / "metrics.csv").exists()
+    assert (config.run_dir / "config.json").exists()
+    assert (config.run_dir / "environment.json").exists()
     assert (config.run_dir / "actor.pt").exists()
     assert (config.run_dir / "critic.pt").exists()
     assert (config.run_dir / "actor.onnx").exists()

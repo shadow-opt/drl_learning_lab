@@ -8,6 +8,7 @@ from torch import nn
 from torch.optim import Adam
 
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
+from drl_lab.common.experiment import save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.networks import MLP
@@ -46,6 +47,7 @@ def accuracy_from_logits(logits: torch.Tensor, labels: torch.Tensor) -> float:
 def train(config: BinaryClassifierConfig) -> tuple[MLP, float]:
     set_global_seed(config.seed)
     config.run_dir.mkdir(parents=True, exist_ok=True)
+    save_run_snapshots(config, config.run_dir)
 
     x, y = make_dataset(config)
     model = MLP(input_dim=2, hidden_sizes=[16, 16], output_dim=1)

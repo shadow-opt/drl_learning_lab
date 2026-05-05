@@ -15,6 +15,7 @@ from drl_lab.algorithms.td3.config import TD3Config
 from drl_lab.algorithms.td3.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
+from drl_lab.common.experiment import save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -24,6 +25,7 @@ from drl_lab.common.seed import set_global_seed
 def train(config: TD3Config) -> dict[str, float]:
     set_global_seed(config.seed)
     config.run_dir.mkdir(parents=True, exist_ok=True)
+    save_run_snapshots(config, config.run_dir)
     device = resolve_device("auto")
     rng = np.random.default_rng(config.seed)
 

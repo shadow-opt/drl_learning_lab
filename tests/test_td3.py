@@ -109,6 +109,8 @@ def test_td3_short_training_loop_writes_artifacts(tmp_path) -> None:  # type: ig
 
     assert "last_eval_return" in metrics
     assert (config.run_dir / "metrics.csv").exists()
+    assert (config.run_dir / "config.json").exists()
+    assert (config.run_dir / "environment.json").exists()
     assert (config.run_dir / "actor.pt").exists()
     assert (config.run_dir / "critics.pt").exists()
     assert (config.run_dir / "actor.onnx").exists()

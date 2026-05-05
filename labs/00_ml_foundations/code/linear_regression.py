@@ -8,6 +8,7 @@ from torch import nn
 from torch.optim import Adam
 
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
+from drl_lab.common.experiment import save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -53,6 +54,7 @@ def make_dataset(config: LinearRegressionConfig) -> tuple[torch.Tensor, torch.Te
 def train(config: LinearRegressionConfig) -> tuple[LinearRegressor, float]:
     set_global_seed(config.seed)
     config.run_dir.mkdir(parents=True, exist_ok=True)
+    save_run_snapshots(config, config.run_dir)
 
     x, y = make_dataset(config)
     model = LinearRegressor(config.input_dim)

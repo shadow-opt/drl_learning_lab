@@ -16,6 +16,7 @@ from drl_lab.algorithms.ppo.config import PPOConfig
 from drl_lab.algorithms.ppo.eval import evaluate
 from drl_lab.common.checkpoint import CheckpointMetadata, save_checkpoint
 from drl_lab.common.device import resolve_device
+from drl_lab.common.experiment import save_run_snapshots
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.logging import CsvLogger
 from drl_lab.common.onnx_check import compare_pytorch_onnx
@@ -66,6 +67,7 @@ def _append_episode_tensors(
 def train(config: PPOConfig) -> dict[str, float]:
     set_global_seed(config.seed)
     config.run_dir.mkdir(parents=True, exist_ok=True)
+    save_run_snapshots(config, config.run_dir)
     device = resolve_device("auto")
 
     env = gym.make(config.env_id)
