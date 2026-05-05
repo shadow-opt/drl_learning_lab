@@ -19,3 +19,10 @@ Every trainable model should eventually run outside the training loop.
 - linear regression export
 - binary classifier export
 - DQN Q-network export
+- VPG actor export
+- PPO actor export
+- TorchScript trace export
+- `torch.export` ExportedProgram export
+- ONNXRuntime consistency checks
+- TorchScript consistency checks
+- `torch.export` consistency checks

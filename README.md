@@ -99,4 +99,5 @@ conda run -n drl-lab python labs/00_ml_foundations/code/binary_classifier.py
 conda run -n drl-lab python labs/02_rl_math/code/value_iteration_demo.py
 conda run -n drl-lab python labs/04_dqn/code/dqn_smoke_demo.py
 conda run -n drl-lab python -m drl_lab.algorithms.dqn.train --total-steps 300 --learning-starts 32
+conda run -n drl-lab python labs/08_export_deployment/export_demo.py
 ```

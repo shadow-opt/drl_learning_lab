@@ -41,3 +41,35 @@ def export_to_onnx(
         )
 
     return path
+
+
+def export_to_torchscript(
+    model: nn.Module,
+    example_input: torch.Tensor,
+    output_path: str | Path,
+) -> Path:
+    """Trace and save an inference-only TorchScript module."""
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    model.eval()
+    with torch.inference_mode():
+        traced = torch.jit.trace(model, example_input)  # type: ignore[no-untyped-call]
+        traced.save(str(path))
+
+    return path
+
+
+def export_to_torch_export(
+    model: nn.Module,
+    example_input: torch.Tensor,
+    output_path: str | Path,
+) -> Path:
+    """Export and save a PyTorch ExportedProgram."""
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    model.eval()
+    exported = torch.export.export(model, (example_input,))
+    torch.export.save(exported, path)
+    return path
