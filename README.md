@@ -73,15 +73,20 @@ The current skeleton includes:
 
 - seed, device, checkpoint, export, and ONNX consistency helpers
 - a small MLP example
-- linear regression and binary classification training examples
-- GridWorld value iteration
-- first DQN components: replay buffer, Q-network, DQN loss, ONNX export test
+- linear regression, binary classification, and image classification training
+  examples
+- GridWorld value iteration, policy iteration, Monte Carlo control, SARSA,
+  Q-learning, and Expected SARSA
+- DQN components: replay buffer, Q-network, DQN loss, ONNX export test
 - DQN CartPole training loop with checkpoint, eval, and Q-network export
+- VPG and PPO CartPole training loops
+- DDPG, TD3, and SAC core components for continuous control
+- TorchScript, `torch.export`, ONNX, and ONNXRuntime consistency checks
 - pytest coverage for deterministic seeding, checkpoint restore, ONNX export,
-  supervised examples, tabular RL, and DQN
+  supervised examples, tabular RL, DQN, VPG, PPO, DDPG, TD3, and SAC
 
-This is intentionally small. Future algorithm modules should be added only when
-their notes, exercises, code, report, and tests are ready.
+This remains intentionally incremental. Future algorithm modules should be added
+only when their notes, exercises, code, report, and tests are ready.
 
 ## Current Quality Gates
 
@@ -96,8 +101,15 @@ Useful demos:
 ```bash
 conda run -n drl-lab python labs/00_ml_foundations/code/linear_regression.py
 conda run -n drl-lab python labs/00_ml_foundations/code/binary_classifier.py
+conda run -n drl-lab python labs/00_ml_foundations/code/image_classifier.py
 conda run -n drl-lab python labs/02_rl_math/code/value_iteration_demo.py
+conda run -n drl-lab python labs/03_tabular_rl/code/td_control_demo.py
 conda run -n drl-lab python labs/04_dqn/code/dqn_smoke_demo.py
 conda run -n drl-lab python -m drl_lab.algorithms.dqn.train --total-steps 300 --learning-starts 32
+conda run -n drl-lab python labs/05_policy_gradient/vpg/code/vpg_core_demo.py
+conda run -n drl-lab python labs/05_policy_gradient/ppo/code/ppo_core_demo.py
+conda run -n drl-lab python labs/05_policy_gradient/ddpg/code/ddpg_core_demo.py
+conda run -n drl-lab python labs/05_policy_gradient/td3/code/td3_core_demo.py
+conda run -n drl-lab python labs/05_policy_gradient/sac/code/sac_core_demo.py
 conda run -n drl-lab python labs/08_export_deployment/export_demo.py
 ```
