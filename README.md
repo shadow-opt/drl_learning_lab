@@ -122,5 +122,5 @@ conda run -n drl-lab python -m drl_lab.algorithms.sac.train --total-steps 300 --
 conda run -n drl-lab python labs/05_policy_gradient/trpo/code/trpo_math_demo.py
 conda run -n drl-lab python labs/06_spinningup_track/code/list_mappings.py
 conda run -n drl-lab python labs/07_experiment_engineering/code/snapshot_demo.py
-conda run -n drl-lab python labs/08_export_deployment/export_demo.py
+conda run -n drl-lab python labs/08_export_deployment/code/export_demo.py
 ```
