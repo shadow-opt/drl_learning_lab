@@ -21,6 +21,8 @@ This track starts the Spinning Up main line after DQN and tabular RL.
 - entropy
 - GAE
 - clipped objectives for PPO
+- deterministic policy gradients
+- target networks for off-policy actor-critic methods
 
 ## Engineering Requirements
 

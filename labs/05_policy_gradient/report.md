@@ -4,4 +4,4 @@ Use `docs/experiment_report_template.md`.
 
 ## Current Status
 
-This track is documented as the next DRL stage after DQN.
+This track includes VPG and PPO training loops, plus DDPG core components.
