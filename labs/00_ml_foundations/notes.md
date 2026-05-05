@@ -20,6 +20,8 @@ Focus on the minimum machine learning background needed before deep RL.
 - overfitting and regularization
 - normalization
 - learning curves
+- image classification with `[batch, channels, height, width]` tensors
+- `Dataset`, `DataLoader`, train/validation split, and batched evaluation
 
 ## Engineering Habits
 
@@ -27,3 +29,4 @@ Focus on the minimum machine learning background needed before deep RL.
 - Start with a tiny dataset that the model can overfit.
 - Track loss before adding complexity.
 - Save the config and seed for each experiment.
+- Export the inference graph and compare PyTorch vs ONNXRuntime outputs.

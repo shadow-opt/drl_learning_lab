@@ -29,3 +29,14 @@ def test_binary_classifier_learns_small_problem(tmp_path) -> None:  # type: igno
     config = module.BinaryClassifierConfig(epochs=80, run_dir=tmp_path / "binary")
     _, final_accuracy = module.train(config)
     assert final_accuracy > 0.98
+
+
+def test_image_classifier_learns_small_problem(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    module = load_module("labs/00_ml_foundations/code/image_classifier.py", "image_classifier")
+    config = module.ImageClassifierConfig(
+        samples_per_class=12,
+        epochs=5,
+        run_dir=tmp_path / "image",
+    )
+    _, final_accuracy = module.train(config)
+    assert final_accuracy > 0.7

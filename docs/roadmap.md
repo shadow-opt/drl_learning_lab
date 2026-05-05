@@ -47,7 +47,9 @@ Current status:
 
 - linear regression is implemented
 - binary classifier is implemented
-- MNIST or FashionMNIST remains future work
+- a small 28x28 image classifier is implemented with an offline synthetic
+  dataset; swapping in MNIST or FashionMNIST remains an optional extension when
+  `torchvision` is available
 
 ## Phase 2: RL Math
 
