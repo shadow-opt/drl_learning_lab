@@ -1,0 +1,17 @@
+name: drl-lab
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pytorch
+  - cpuonly
+  - pip:
+      - -e .[dev]
+      - onnx
+      - onnxruntime
+      - gymnasium[classic-control]
+      - tensorboard
+      - pyyaml
