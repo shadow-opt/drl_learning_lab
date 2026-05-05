@@ -17,3 +17,12 @@ For each algorithm:
 - keep upstream license information in `external/spinningup/`
 
 Do not paste large chunks of upstream source code here.
+
+## Current Mappings
+
+- `dqn/spinningup_mapping.md`
+- `vpg/spinningup_mapping.md`
+- `ppo/spinningup_mapping.md`
+- `ddpg/spinningup_mapping.md`
+- `td3/spinningup_mapping.md`
+- `sac/spinningup_mapping.md`
