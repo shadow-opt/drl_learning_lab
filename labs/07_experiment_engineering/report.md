@@ -9,3 +9,9 @@ debugging.
   `environment.json`.
 - Supervised learning, DQN, VPG, PPO, DDPG, TD3, and SAC training entrypoints
   save run snapshots before training.
+
+## Smoke Command
+
+```bash
+conda run -n drl-lab python labs/07_experiment_engineering/code/snapshot_demo.py
+```
