@@ -81,7 +81,8 @@ The current skeleton includes:
 - DQN CartPole training loop with checkpoint, eval, and Q-network export
 - VPG and PPO CartPole training loops
 - DDPG Pendulum training loop
-- TD3 and SAC core components for continuous control
+- TD3 Pendulum training loop
+- SAC core components for continuous control
 - TorchScript, `torch.export`, ONNX, and ONNXRuntime consistency checks
 - pytest coverage for deterministic seeding, checkpoint restore, ONNX export,
   supervised examples, tabular RL, DQN, VPG, PPO, DDPG, TD3, and SAC
@@ -112,6 +113,7 @@ conda run -n drl-lab python labs/05_policy_gradient/ppo/code/ppo_core_demo.py
 conda run -n drl-lab python labs/05_policy_gradient/ddpg/code/ddpg_core_demo.py
 conda run -n drl-lab python -m drl_lab.algorithms.ddpg.train --total-steps 300 --learning-starts 32 --eval-episodes 1
 conda run -n drl-lab python labs/05_policy_gradient/td3/code/td3_core_demo.py
+conda run -n drl-lab python -m drl_lab.algorithms.td3.train --total-steps 300 --learning-starts 32 --eval-episodes 1
 conda run -n drl-lab python labs/05_policy_gradient/sac/code/sac_core_demo.py
 conda run -n drl-lab python labs/08_export_deployment/export_demo.py
 ```
