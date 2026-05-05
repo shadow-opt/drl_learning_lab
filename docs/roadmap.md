@@ -151,6 +151,8 @@ Current status:
 - DDPG core components and Pendulum training loop are implemented
 - TD3 core components and Pendulum training loop are implemented
 - SAC core components and Pendulum training loop are implemented
+- TRPO math-reading utilities are implemented for conjugate gradient and
+  KL-constrained step scaling
 
 ## Phase 6: Experiment Engineering
 

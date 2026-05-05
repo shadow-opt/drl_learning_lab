@@ -26,6 +26,7 @@ This track starts the Spinning Up main line after DQN and tabular RL.
 - clipped double Q-learning and target policy smoothing
 - entropy-regularized actor-critic objectives
 - tanh-squashed Gaussian policies and log-prob correction
+- trust-region updates, KL constraints, and conjugate gradient
 
 ## Engineering Requirements
 

@@ -26,3 +26,4 @@ Do not paste large chunks of upstream source code here.
 - `ddpg/spinningup_mapping.md`
 - `td3/spinningup_mapping.md`
 - `sac/spinningup_mapping.md`
+- `trpo/spinningup_mapping.md`
