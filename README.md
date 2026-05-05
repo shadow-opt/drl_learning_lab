@@ -85,9 +85,10 @@ The current skeleton includes:
 - DDPG Pendulum training loop
 - TD3 Pendulum training loop
 - SAC Pendulum training loop
+- TRPO math-reading utilities for conjugate gradient and KL step scaling
 - TorchScript, `torch.export`, ONNX, and ONNXRuntime consistency checks
 - pytest coverage for deterministic seeding, checkpoint restore, ONNX export,
-  supervised examples, tabular RL, DQN, VPG, PPO, DDPG, TD3, and SAC
+  supervised examples, tabular RL, DQN, VPG, PPO, DDPG, TD3, SAC, and TRPO
 
 This remains intentionally incremental. Future algorithm modules should be added
 only when their notes, exercises, code, report, and tests are ready.
