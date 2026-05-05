@@ -22,6 +22,16 @@ class GridWorld:
         self.config = config or GridWorldConfig()
         self.n_states = self.config.rows * self.config.cols
         self.n_actions = len(self.actions)
+        self.state = self.config.start_state
+
+    def reset(self) -> int:
+        self.state = self.config.start_state
+        return self.state
+
+    def step(self, action: int) -> tuple[int, float, bool]:
+        next_state, reward, done = self.transition(self.state, action)
+        self.state = next_state
+        return next_state, reward, done
 
     def to_row_col(self, state: int) -> tuple[int, int]:
         self._validate_state(state)

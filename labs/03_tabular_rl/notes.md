@@ -14,3 +14,10 @@ inspect.
 
 Start with the deterministic GridWorld in `src/drl_lab/algorithms/tabular`.
 Then move to Gymnasium FrozenLake or CliffWalking.
+
+## Implemented
+
+- value iteration
+- policy iteration
+- epsilon-greedy action selection
+- Q-learning

@@ -95,7 +95,8 @@ Deliverables:
 
 Current status:
 
-- local GridWorld value iteration is implemented as the first tabular slice
+- local GridWorld value iteration, policy iteration, and Q-learning are
+  implemented
 
 ## Phase 4: DQN
 

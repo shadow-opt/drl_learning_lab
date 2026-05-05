@@ -4,4 +4,12 @@ Use `docs/experiment_report_template.md` for each experiment.
 
 ## Current Status
 
-GridWorld and value iteration are implemented as the first executable slice.
+GridWorld, value iteration, policy iteration, and Q-learning are implemented.
+
+## Smoke Commands
+
+```bash
+conda run -n drl-lab python labs/03_tabular_rl/code/value_iteration_demo.py
+conda run -n drl-lab python labs/03_tabular_rl/code/policy_iteration_demo.py
+conda run -n drl-lab python labs/03_tabular_rl/code/q_learning_demo.py
+```
