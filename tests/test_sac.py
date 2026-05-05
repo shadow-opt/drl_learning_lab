@@ -5,12 +5,15 @@ import torch
 
 from drl_lab.algorithms.sac import (
     ContinuousReplayBuffer,
+    SACAgent,
+    SACConfig,
     SquashedGaussianActor,
     TwinContinuousQNetwork,
     sac_actor_loss,
     sac_critic_loss,
     temperature_loss,
 )
+from drl_lab.algorithms.sac.train import train
 from drl_lab.common.export import export_to_onnx
 from drl_lab.common.onnx_check import compare_pytorch_onnx
 from drl_lab.common.seed import set_global_seed
@@ -67,6 +70,26 @@ def test_sac_losses_are_finite() -> None:
     assert log_alpha.grad is not None
 
 
+def test_sac_agent_update_changes_alpha() -> None:
+    set_global_seed(94)
+    config = SACConfig(hidden_size=8, initial_alpha=0.2)
+    agent = SACAgent(
+        obs_dim=3,
+        action_dim=2,
+        action_limit=1.0,
+        config=config,
+        device=torch.device("cpu"),
+    )
+    buffer, device = make_batch()
+    batch = buffer.sample(4, device=device)
+    before = float(agent.alpha.detach())
+
+    metrics = agent.update(batch)
+
+    assert metrics["alpha"] != before
+    assert torch.isfinite(agent.alpha)
+
+
 def test_sac_actor_onnx_consistency(tmp_path) -> None:  # type: ignore[no-untyped-def]
     set_global_seed(93)
     actor = SquashedGaussianActor(obs_dim=3, action_dim=2, action_limit=1.0, hidden_sizes=[8])
@@ -75,3 +98,25 @@ def test_sac_actor_onnx_consistency(tmp_path) -> None:  # type: ignore[no-untype
     result = compare_pytorch_onnx(actor, onnx_path, example_input)
 
     assert result.passed
+
+
+def test_sac_short_training_loop_writes_artifacts(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    config = SACConfig(
+        total_steps=12,
+        learning_starts=4,
+        batch_size=4,
+        buffer_capacity=32,
+        eval_frequency=100,
+        eval_episodes=1,
+        hidden_size=8,
+        run_dir=tmp_path / "sac",
+    )
+
+    metrics = train(config)
+
+    assert "last_eval_return" in metrics
+    assert "last_alpha" in metrics
+    assert (config.run_dir / "metrics.csv").exists()
+    assert (config.run_dir / "actor.pt").exists()
+    assert (config.run_dir / "critics.pt").exists()
+    assert (config.run_dir / "actor.onnx").exists()

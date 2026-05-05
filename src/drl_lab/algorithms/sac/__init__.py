@@ -2,6 +2,8 @@
 
 from drl_lab.algorithms.ddpg.buffer import ContinuousReplayBatch, ContinuousReplayBuffer
 from drl_lab.algorithms.ddpg.losses import soft_update
+from drl_lab.algorithms.sac.agent import SACAgent
+from drl_lab.algorithms.sac.config import SACConfig
 from drl_lab.algorithms.sac.losses import sac_actor_loss, sac_critic_loss, temperature_loss
 from drl_lab.algorithms.sac.networks import SquashedGaussianActor
 from drl_lab.algorithms.td3.networks import TwinContinuousQNetwork
@@ -9,6 +11,8 @@ from drl_lab.algorithms.td3.networks import TwinContinuousQNetwork
 __all__ = [
     "ContinuousReplayBatch",
     "ContinuousReplayBuffer",
+    "SACAgent",
+    "SACConfig",
     "SquashedGaussianActor",
     "TwinContinuousQNetwork",
     "sac_actor_loss",

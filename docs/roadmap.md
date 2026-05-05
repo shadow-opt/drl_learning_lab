@@ -150,7 +150,7 @@ Current status:
 - PPO core components and CartPole training loop are implemented
 - DDPG core components and Pendulum training loop are implemented
 - TD3 core components and Pendulum training loop are implemented
-- SAC core components are implemented
+- SAC core components and Pendulum training loop are implemented
 
 ## Phase 6: Experiment Engineering
 
