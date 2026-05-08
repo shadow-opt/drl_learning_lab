@@ -1,0 +1,24 @@
+# Glossary
+
+- **model**：把输入变成输出的函数，通常由神经网络表示。
+- **parameter**：模型中会被训练更新的数值，例如 weight 和 bias。
+- **loss**：一个标量，表示预测错得多严重；optimizer 最小化它。
+- **gradient**：loss 对参数的变化方向，告诉 optimizer 怎么改参数。
+- **optimizer**：根据 gradient 更新参数的算法，例如 SGD、Adam。
+- **tensor**：带 shape 和 dtype 的多维数组，是 PyTorch 的基本数据结构。
+- **shape**：tensor 的维度，例如 `[batch, features]`。
+- **dtype**：tensor 中数字的类型，例如 `float32`、`int64`。
+- **device**：tensor 在哪里计算，例如 CPU 或 CUDA GPU。
+- **autograd**：PyTorch 自动求导系统。
+- **checkpoint**：保存模型参数和训练状态的文件。
+- **artifact**：一次实验写出的产物，例如 metrics、checkpoint、ONNX 文件。
+- **MDP**：Markov Decision Process，强化学习问题的标准建模方式。
+- **state**：环境当前状态。
+- **action**：agent 在状态中做出的选择。
+- **reward**：环境对 action 的即时反馈。
+- **return**：从某一步开始累积的折扣回报。
+- **value**：站在某个 state 往后看的期望 return。
+- **policy**：agent 如何根据 state 选择 action 的规则。
+- **Bellman backup**：用“一步 reward + 下一状态 value”更新当前 value。
+- **ONNX**：用于跨 runtime 保存推理图的模型格式。
+- **ONNXRuntime**：运行 ONNX 模型的独立推理 runtime。

@@ -1,68 +1,54 @@
 # drl_learning_lab
 
-这是一个中文 Deep Reinforcement Learning 自学课程实验室。它不是算法脚本合集，也不是 Spinning Up 的搬运仓库；它的目标是让你按学习顺序完成：
+这是一个中文 Deep Reinforcement Learning 训练营式自学仓库。默认学习者会 Python 基础和基本命令行，但不默认会机器学习、PyTorch 或强化学习。
 
-1. 读懂知识点；
-2. 手推关键公式或更新式；
-3. 跑通教学实验；
-4. 阅读现代 PyTorch 工程实现；
-5. 写实验复盘；
-6. 做 checkpoint、eval、ONNX/ONNXRuntime 一致性验证。
+当前目标不是一口气冲进复杂机器人系统，而是先把以下能力打牢：
 
-当前不进入 `legged_gym`、Isaac Gym、机器人控制、sim2real 或大型分布式训练。先把 ML、PyTorch、RL 数学、经典 DRL、实验工程和模型导出打牢。
+1. 机器学习和 PyTorch 基础；
+2. RL 数学和 tabular RL；
+3. DQN、VPG、PPO、DDPG、TD3、SAC 等经典 DRL；
+4. 实验记录、debug、复现；
+5. checkpoint、eval、ONNX/ONNXRuntime 导出一致性。
+
+当前不进入 `legged_gym`、Isaac Gym、机器人控制、sim2real 或大型分布式训练。
 
 ## 怎么学
 
-先读 [course/index.md](course/index.md)。每章都遵循同一个闭环：
+主入口是 [curriculum/README.md](curriculum/README.md)。学习内容已经重组到：
 
 ```text
-course/ 读讲义 -> labs/ 做练习和 demo -> src/ 看工程实现 -> tests/ 验收 -> report.md 复盘
+curriculum/chapters/<chapter>/
+  README.md       本章入口
+  lesson.md       中文讲义
+  walkthrough.md  手把手走读
+  lab.md          实验命令、预期输出、产物解释
+  exercises.md    练习
+  hints.md        提示
+  solutions.md    参考答案和解析
+  report.md       复盘模板
+  code/           教学 demo
 ```
 
-推荐顺序：
+不要从 `src/` 开始学。`src/drl_lab/` 是工程实现参考，只有在章节要求你对照源码时再进入。
 
-1. [ML Foundations](course/00_ml_foundations.md)
-2. [PyTorch Foundations](course/01_pytorch_foundations.md)
-3. [RL Math](course/02_rl_math.md)
-4. [Tabular RL](course/03_tabular_rl.md)
-5. [DQN](course/04_dqn.md)
-6. [Policy Gradient Track](course/05_policy_gradient/index.md)
-7. [Spinning Up 对照学习](course/06_spinningup_track.md)
-8. [Experiment Engineering](course/07_experiment_engineering.md)
-9. [Export Deployment](course/08_export_deployment.md)
+## 当前状态
 
-大多数章节按这个闭环学习；`06_spinningup_track` 是外部阅读映射层，重点是把 Spinning Up 概念映射回本仓库的中文讲义、现代 PyTorch 实现和工程检查。每章学完的最低标准是：能用自己的话解释核心概念，能写出关键公式或 update rule，能跑通对应 demo，能在 `report.md` 里记录一次失败、一次观察和一次结论。对没有神经网络的章节，不要求 ONNX 导出；对可训练神经网络，必须检查 checkpoint、eval 和 ONNX/ONNXRuntime 一致性。
+本仓库不再笼统宣称“全仓小白可自学”。章节状态见 [curriculum/status.md](curriculum/status.md)：
 
-## 仓库结构
+- `beginner-ready`：会 Python 的学习者可以按本章文档独立推进。
+- `usable`：可以学习和运行，但需要更多主动查阅。
+- `advanced`：适合完成基础章节后再进入。
+- `reference-track`：外部资料映射，不是训练章节。
+- `engineering-track`：工程专题，建议在算法基础后学习。
 
-```text
-course/              中文课程正文和学习索引
-labs/                实验作业包：导读、练习、教学 demo、报告模板
-src/drl_lab/         现代 PyTorch 工程实现
-tests/               单元测试、smoke test、导出一致性测试
-docs/                roadmap、模板、debug/export checklist、工程规范
-external/spinningup/ Spinning Up 来源说明和 MIT license
-experiments/         配置、运行产物和实验报告位置
-```
-
-`course` 是学习入口；`labs` 是动手区；`src` 是工程参考。不要从 `src` 直接开始学算法，否则会被工程细节淹没。
+第一批 `beginner-ready` 章节是 `00-02`：ML Foundations、PyTorch Foundations、RL Math。
 
 ## 环境与命令
-
-推荐使用 conda：
 
 ```bash
 conda env create -f environment.yml
 conda activate drl-lab
 python -m pip install -e ".[dev]"
-```
-
-质量门禁：
-
-```bash
-conda run -n drl-lab python -m pytest
-conda run -n drl-lab ruff check .
-conda run -n drl-lab mypy src
 ```
 
 环境自检：
@@ -72,37 +58,35 @@ conda run -n drl-lab python -c "import torch, numpy, onnxruntime, gymnasium, drl
 conda run -n drl-lab python -m pytest tests/test_learning_structure.py
 ```
 
-常用学习 demo：
+前三章最小 demo：
 
 ```bash
-conda run -n drl-lab python labs/00_ml_foundations/code/linear_regression.py
-conda run -n drl-lab python labs/01_pytorch_foundations/code/mlp_export_demo.py
-conda run -n drl-lab python labs/02_rl_math/code/value_iteration_demo.py
-conda run -n drl-lab python labs/03_tabular_rl/code/q_learning_demo.py
-conda run -n drl-lab python labs/04_dqn/code/dqn_smoke_demo.py
-conda run -n drl-lab python -m drl_lab.algorithms.dqn.train --total-steps 300 --learning-starts 32
-conda run -n drl-lab python labs/08_export_deployment/code/export_demo.py
+conda run -n drl-lab python curriculum/chapters/00_ml_foundations/code/linear_regression.py
+conda run -n drl-lab python curriculum/chapters/01_pytorch_foundations/code/mlp_export_demo.py
+conda run -n drl-lab python curriculum/chapters/02_rl_math/code/value_iteration_demo.py
 ```
 
-这些短训练和 demo 是 smoke test，用来确认代码、shape、artifact 和导出链路正常；它们不代表算法已经在 benchmark 上收敛。
+全量质量门禁：
 
-更多命令见各章 `course/*.md` 和对应 `labs/*/notes.md`。
+```bash
+conda run -n drl-lab python -m pytest
+conda run -n drl-lab ruff check .
+conda run -n drl-lab mypy src
+```
 
-## 自学可用性审计
+## 仓库结构
 
-仓库的课程结构、lab 闭环、Spinning Up 来源、AGENTS 护栏和质量门禁由 [docs/self_study_audit.md](docs/self_study_audit.md) 记录，并由 `tests/test_learning_structure.py` 做结构检查。
+```text
+curriculum/         训练营式学习内容和章节状态
+src/drl_lab/        现代 PyTorch 工程实现
+tests/              单元测试、smoke test、导出一致性测试
+docs/               debug/export checklist、实验报告模板、维护说明
+external/spinningup/ Spinning Up 来源说明和 MIT license
+experiments/        运行产物目录
+```
 
 ## Spinning Up 的角色
 
-OpenAI Spinning Up 是 DRL 主参考，但本仓库不会直接复制其旧代码风格。每个相关算法章都会说明：
-
-- Spinning Up 对应阅读位置；
-- 本仓库吸收了哪些概念；
-- 现代 PyTorch 实现在哪里；
-- 哪些工程能力是本仓库额外补充的。
+OpenAI Spinning Up 是 DRL 主参考，但本仓库不会复制其旧代码风格。它作为外部概念老师使用；本仓库负责中文重写、基础补课、现代 PyTorch 实现、测试、实验产物和导出部署练习。
 
 来源与 MIT license 保存在 [external/spinningup](external/spinningup)。
-
-## 贡献和维护
-
-贡献者和 AI agent 必须先读 [AGENTS.md](AGENTS.md)。核心原则：新增内容必须服务学习闭环。不要只加脚本，不要堆空文件，不要扩展到当前范围外的大系统。

@@ -24,7 +24,7 @@
 
 ## 代码双索引
 
-- 教学 demo：`labs/<chapter>/code/...`
+- 教学 demo：`curriculum/chapters/<chapter>/code/...`
 - 工程实现：`src/drl_lab/...`
 - 测试：`tests/test_...py`
 
